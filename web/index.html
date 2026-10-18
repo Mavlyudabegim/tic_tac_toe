@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Only our own files may load; no inline scripts/styles, no external hosts. -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Tic-Tac-Toe Q-Learning</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="page">
+    <h1 class="page__title">Tic-Tac-Toe vs a Q-learning agent</h1>
+    <p class="page__subtitle">The agent learned only by playing against itself. It was never given a strategy.</p>
+
+    <div class="layout">
+      <!-- Game -->
+      <section class="card" aria-label="Game board">
+        <div class="status" id="status" role="status" aria-live="polite">Loading…</div>
+        <div class="board" id="board"></div>
+        <p class="legend" id="legend"></p>
+      </section>
+
+      <!-- Controls -->
+      <aside class="card" aria-label="Controls">
+        <div class="section">
+          <p class="label">You play</p>
+          <div class="segmented" id="side">
+            <button type="button" class="segmented__btn is-active" data-side="1" aria-pressed="true">X (first)</button>
+            <button type="button" class="segmented__btn" data-side="-1" aria-pressed="false">O (second)</button>
+          </div>
+          <button type="button" class="btn" id="new-game">New game</button>
+        </div>
+
+        <div class="section">
+          <div class="row">
+            <label class="label" for="show-q">Show Q-values</label>
+            <input type="checkbox" id="show-q" checked>
+          </div>
+          <p class="muted">How good each empty cell is for the player about to move: +1 = sure win, 0 = draw, −1 = loss.</p>
+        </div>
+
+        <div class="section">
+          <div class="row">
+            <label class="label" for="eps">AI random moves</label>
+            <span class="muted" id="eps-value">0%</span>
+          </div>
+          <input type="range" class="slider" id="eps" min="0" max="100" step="5" value="0">
+          <p class="muted">At 0% the AI plays perfectly, so the best you can do is draw. Raise this if you want a chance to win.</p>
+        </div>
+
+        <div class="section">
+          <p class="label">Score</p>
+          <div class="score">
+            <div><span class="score__value" id="score-you">0</span><span class="score__label">You</span></div>
+            <div><span class="score__value" id="score-draw">0</span><span class="score__label">Draws</span></div>
+            <div><span class="score__value" id="score-ai">0</span><span class="score__label">AI</span></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <p class="label">AI's last decision</p>
+          <div class="bars" id="ai-bars"></div>
+        </div>
+
+        <div class="section">
+          <p class="label">Model</p>
+          <dl class="meta" id="meta"></dl>
+        </div>
+
+        <div class="section">
+          <details class="details">
+            <summary>How it works</summary>
+            <p>Tabular Q-learning with self-play. The board is always seen from the side of the player to move, and
+              the 8 rotations/reflections are merged, so 4,520 positions become 627 table rows. The update is
+              <code>Q(s,a) ← Q + α·(target − Q)</code>. The target is +1 for a winning move, 0 for a drawing move,
+              and otherwise <code>−γ·max Q(s′)</code>, because the opponent's best value is minus yours.</p>
+          </details>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Order matters: data, then engine, then UI. -->
+  <script src="data/qtable.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

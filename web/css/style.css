@@ -1,0 +1,207 @@
+/* =========================================================================
+   Tic-Tac-Toe Q-learning — styles
+   1. Theme tokens (light / dark)
+   2. Base & layout
+   3. Board
+   4. Side panel controls
+   5. AI decision bars & model info
+   ========================================================================= */
+
+/* 1. Theme tokens ------------------------------------------------------- */
+:root {
+  --bg: #f6f7f9;
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --x: #2563eb;
+  --o: #e11d48;
+  --accent: #111827;
+  --accent-text: #ffffff;
+  --good-rgb: 22, 163, 74;
+  --bad-rgb: 220, 38, 38;
+  --win: #fde68a;
+  --radius: 14px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b0f17;
+    --card: #121826;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --line: #253046;
+    --x: #60a5fa;
+    --o: #fb7185;
+    --accent: #e5e7eb;
+    --accent-text: #0b0f17;
+    --good-rgb: 74, 222, 128;
+    --bad-rgb: 248, 113, 113;
+    --win: #713f12;
+  }
+}
+
+/* 2. Base & layout ------------------------------------------------------ */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.page { max-width: 980px; margin: 0 auto; padding: 28px 16px 48px; }
+.page__title { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.02em; }
+.page__subtitle { color: var(--muted); margin: 0 0 24px; }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 760px) { .layout { grid-template-columns: 1fr; } }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+
+.muted { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
+.error { color: rgb(var(--bad-rgb)); }
+code { font-size: 13px; }
+
+/* 3. Board -------------------------------------------------------------- */
+.status {
+  font-size: 18px;
+  font-weight: 600;
+  min-height: 28px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  aspect-ratio: 1;
+}
+
+.cell {
+  --q-strength: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: clamp(42px, 12vw, 72px);
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.05s;
+}
+.cell:disabled { cursor: default; }
+.cell:not(:disabled):hover { outline: 2px solid var(--muted); outline-offset: -2px; }
+.cell:not(:disabled):active { transform: scale(0.98); }
+.cell:focus-visible { outline: 3px solid var(--x); outline-offset: 2px; }
+
+.cell--x { color: var(--x); }
+.cell--o { color: var(--o); }
+.cell--win { background: var(--win); }
+.cell--good { background: rgba(var(--good-rgb), var(--q-strength)); }
+.cell--bad { background: rgba(var(--bad-rgb), var(--q-strength)); }
+.cell--last::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 2px dashed var(--muted);
+  border-radius: 9px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.q { font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.q--best::before { content: "★ "; font-size: 12px; }
+
+.legend {
+  min-height: 20px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* 4. Side panel controls ------------------------------------------------ */
+.section + .section { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+
+.label {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.row .label { margin: 0; }
+
+.segmented { display: flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.segmented__btn {
+  flex: 1;
+  padding: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.segmented__btn.is-active { background: var(--accent); color: var(--accent-text); }
+
+.btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--accent-text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.slider { width: 100%; }
+
+.score { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; text-align: center; }
+.score__value { display: block; font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.score__label { color: var(--muted); font-size: 13px; }
+
+/* 5. AI decision bars & model info -------------------------------------- */
+.bars { display: grid; gap: 5px; font-size: 13px; font-variant-numeric: tabular-nums; }
+.bar { display: grid; grid-template-columns: 52px 1fr 48px; gap: 8px; align-items: center; }
+.bar__track { position: relative; height: 8px; overflow: hidden; border-radius: 4px; background: var(--bg); }
+.bar__mid { position: absolute; top: -2px; bottom: -2px; left: 50%; width: 1px; background: var(--line); }
+.bar__fill { position: absolute; top: 0; bottom: 0; border-radius: 4px; }
+.bar__fill--good { background: rgb(var(--good-rgb)); }
+.bar__fill--bad { background: rgb(var(--bad-rgb)); }
+.bar__value { text-align: right; }
+
+.meta { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; margin: 0; font-size: 13px; }
+.meta dt { color: var(--muted); }
+.meta dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.details summary { cursor: pointer; font-weight: 600; }
+.details p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }

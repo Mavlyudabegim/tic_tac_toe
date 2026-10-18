@@ -1,0 +1,7 @@
+method,seed,games_to_99pct_accuracy,games_to_zero_losses,final_accuracy,table_rows
+with symmetry,0,4000,6000,1.0,627
+with symmetry,1,4000,6000,1.0,627
+with symmetry,2,4000,6000,1.0,627
+without symmetry,0,26000,26000,0.995575221238938,4520
+without symmetry,1,22000,28000,0.9966814159292036,4520
+without symmetry,2,24000,28000,0.9969026548672566,4520
