@@ -13,7 +13,7 @@ After about **5,000 training games (a few seconds)** the agent plays **perfectly
 
 ![Web UI]
 <img width="1104" height="768" alt="Screenshot 2026-10-18 at 19 43 34" src="https://github.com/user-attachments/assets/227386f8-392d-4044-9a65-468d7e8b8ed5" />
-
+[Tic-Tac-Toe](https://tictactoe-web-nu.vercel.app/)
 ## 1. The task
 
 Tic-Tac-Toe is a two-player game on a 3×3 board. X moves first, and the players take turns. Three in a row (horizontal, vertical or diagonal) wins. A full board with no line is a draw.
