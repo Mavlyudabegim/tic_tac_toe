@@ -1,5 +1,7 @@
 # Tic-Tac-Toe with Q-Learning
 
+[Tic-Tac-Toe](https://tictactoe-web-nu.vercel.app/)
+
 An agent that learns to play Tic-Tac-Toe **from scratch**, using tabular **Q-learning** and **self-play**. It is never told the rules of good play. It only gets a reward at the end of each game and learns from that.
 
 After about **5,000 training games (a few seconds)** the agent plays **perfectly**:
@@ -11,9 +13,8 @@ After about **5,000 training games (a few seconds)** the agent plays **perfectly
 | vs random player, 1,000 games as X                   | 96.9% wins, 0 losses     |
 | vs random player, 1,000 games as O                   | 74.5% wins, 0 losses     |
 
-![Web UI]
 <img width="1104" height="768" alt="Screenshot 2026-10-18 at 19 43 34" src="https://github.com/user-attachments/assets/227386f8-392d-4044-9a65-468d7e8b8ed5" />
-[Tic-Tac-Toe](https://tictactoe-web-nu.vercel.app/)
+
 ## 1. The task
 
 Tic-Tac-Toe is a two-player game on a 3×3 board. X moves first, and the players take turns. Three in a row (horizontal, vertical or diagonal) wins. A full board with no line is a draw.
