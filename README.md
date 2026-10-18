@@ -11,9 +11,8 @@ After about **5,000 training games (a few seconds)** the agent plays **perfectly
 | vs random player, 1,000 games as X                   | 96.9% wins, 0 losses     |
 | vs random player, 1,000 games as O                   | 74.5% wins, 0 losses     |
 
-![Web UI](results/web_ui.png)
-
----
+![Web UI]
+<img width="1104" height="768" alt="Screenshot 2026-10-18 at 19 43 34" src="https://github.com/user-attachments/assets/227386f8-392d-4044-9a65-468d7e8b8ed5" />
 
 ## 1. The task
 
@@ -131,14 +130,6 @@ All versions of a position therefore share **one row** of the Q-table. Something
 | Result after enough training | perfect play     | perfect play     |
 | Training needed              | ~27,000 games    | **~6,000 games** |
 
-### 3.2 Is it allowed?
-
-Yes. It is a standard technique, and it comes from the classic textbook itself:
-
-- **Sutton & Barto, _Reinforcement Learning: An Introduction_, Chapter 1.** The book's first example is a Tic-Tac-Toe learner, and **Exercise 1.2 "Symmetries"** asks exactly how to take advantage of these symmetries. The book is free: [incompleteideas.net/book/the-book-2nd.html](http://incompleteideas.net/book/the-book-2nd.html)
-- The formal theory is **MDP homomorphisms**, for example van der Pol et al., _MDP Homomorphic Networks: Group Symmetries in Reinforcement Learning_, NeurIPS 2020: [arXiv:2006.16908](https://arxiv.org/abs/2006.16908)
-- DeepMind's **AlphaGo / AlphaGo Zero** used the same 8 board symmetries.
-
 Symmetry is domain knowledge that we give the agent, so it can be switched off (`--no-symmetry`). The comparison below shows that **plain Q-learning also reaches perfect play**; symmetry only makes it about **6× faster**.
 
 ---
@@ -161,7 +152,7 @@ The **correct answers** come from a **minimax solver** (`rl/minimax.py`), which 
 
 ### 5.1 Learning curve (with symmetry, 50,000 games)
 
-![Learning curve](results/learning_curve.png)
+<img width="1950" height="546" alt="image" src="https://github.com/user-attachments/assets/ab34fce4-daa6-4b92-a3f4-aaeb6480535f" />
 
 - **Left, optimal-move accuracy:** starts at 29%, because with an empty table all moves look equal and the agent picks at random. It reaches **95% at 2,500 games** and **100% at 5,000 games**, and stays there.
 - **Middle, vs random player:** losses fall to **0** almost at once. Wins settle at about **97% as X** and **75–80% as O**.
@@ -170,7 +161,7 @@ The **correct answers** come from a **minimax solver** (`rl/minimax.py`), which 
 
 ### 5.2 With vs without symmetry (3 seeds each)
 
-![Symmetry comparison](results/symmetry_comparison.png)
+<img width="2080" height="572" alt="image" src="https://github.com/user-attachments/assets/e74f6a5d-f8a5-4ad0-8f47-7a54511da077" />
 
 |                   | Games to 99% accuracy | Games to 0 losses vs perfect player | Final accuracy                | Q-table rows |
 | ----------------- | --------------------- | ----------------------------------- | ----------------------------- | ------------ |
@@ -191,15 +182,6 @@ vs_minimax_as_O      win    0  draw 1000  loss    0
 ```
 
 The agent **never loses**, plays the optimal move in **every** position, and draws every game against perfect play, which is the best possible result in Tic-Tac-Toe.
-
-### 5.4 Comparison with my previous version
-
-My [earlier project](https://github.com/Mavlyudabegim/Tic-Tac-Toe-with-Reinforcement-Learning) (React/TypeScript) played weakly. Re-running its update rule under the same tests (`experiments/compare.py`) showed:
-
-- After 10,000 games (the old "Train 10K" button), it chose the optimal move only **84%** of the time and **lost ~18%** of games to a perfect player.
-- The main reasons were **no symmetry**, **too little training** for that setup, and **self-play statistics** that couldn't show the weakness.
-
-![Old vs new](results/comparison.png)
 
 ---
 
